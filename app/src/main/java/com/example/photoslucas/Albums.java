@@ -75,7 +75,7 @@ public class Albums extends AppCompatActivity {
         bundle.putString(Edit_display_album.ALBUM_NAME, album.name);
         Intent intent = new Intent(this, open_album.class);
         intent.putExtras(bundle);
-        startActivityForResult(intent, ALBUM_EDIT_CODE);
+        startActivity(intent);
     }
 
     protected void onActivityResult(int requestCode,
@@ -110,7 +110,7 @@ public class Albums extends AppCompatActivity {
         else if(resultCode == RESULT_OPEN){
             Album album = albumList.get(index);
             //Here is where you open album
-
+            openAlbum(listView.getSelectedItemPosition());
         }
 
         // redo the adapter to reflect change^K
