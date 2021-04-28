@@ -24,6 +24,8 @@ class Album{
     }
 
 }
+
+
 public class Albums extends AppCompatActivity {
 
     private ListView listView;
@@ -55,8 +57,6 @@ public class Albums extends AppCompatActivity {
         listView.setOnItemClickListener((p, V, pos, id) ->
                 showAlbum(pos));
 
-
-
     }
     private void showAlbum(int pos) {
         Bundle bundle = new Bundle();
@@ -68,10 +68,21 @@ public class Albums extends AppCompatActivity {
         startActivityForResult(intent, ALBUM_EDIT_CODE);
     }
 
+    private void openAlbum(int pos) {
+        Bundle bundle = new Bundle();
+        Album album = albumList.get(pos);
+        bundle.putInt(Edit_display_album.ALBUM_INDEX, pos);
+        bundle.putString(Edit_display_album.ALBUM_NAME, album.name);
+        Intent intent = new Intent(this, open_album.class);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, ALBUM_EDIT_CODE);
+    }
+
     protected void onActivityResult(int requestCode,
                                     int resultCode,
                                     Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+
         if (resultCode == RESULT_CANCELED) {
             return;
         }
@@ -80,7 +91,6 @@ public class Albums extends AppCompatActivity {
         if (bundle == null) {
             return;
         }
-
 
         // gather all info passed back by launched activity
         String name = bundle.getString(Edit_display_album.ALBUM_NAME);
@@ -100,12 +110,12 @@ public class Albums extends AppCompatActivity {
         else if(resultCode == RESULT_OPEN){
             Album album = albumList.get(index);
             //Here is where you open album
+
         }
 
         // redo the adapter to reflect change^K
         listView.setAdapter(
                 new ArrayAdapter<Album>(this, R.layout.album, albumList));
-
     }
 
 }
