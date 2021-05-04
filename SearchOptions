@@ -1,0 +1,311 @@
+package com.example.photoslucas;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.content.Context;
+import android.content.DialogInterface;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.EditText;
+import androidx.appcompat.app.AlertDialog;
+
+
+
+public class SearchOptions extends AppCompatActivity {
+
+    Context context = this;
+    private Button searchAnd, searchOr,searchOne;
+    private Albums albums;
+    private Album searchAlbum = new Album("placeholder");
+    private String tagType1, tagType2, tagValue1, tagValue2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.search_options);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        searchAnd = (Button)findViewById(R.id.search_and);
+        searchOr = (Button)findViewById(R.id.search_or);
+        searchOne = (Button)findViewById(R.id.search_one);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            albums = (Albums) bundle.getSerializable("albums");
+        }
+
+        searchOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder search1 = new AlertDialog.Builder(SearchOptions.this);
+                search1.setTitle("Enter Tag Info");
+
+                final EditText tagType = new EditText(SearchOptions.this);
+                final EditText tagValue = new EditText(SearchOptions.this);
+                tagType.setHint("Tag Type");
+                search1.setView(tagType);
+
+
+                search1.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        tagType1 = tagType.getText().toString();
+                        AlertDialog.Builder search1 = new AlertDialog.Builder(SearchOptions.this);
+                        search1.setTitle("Enter Tag Info");
+                        tagValue.setHint("Tag Value");
+                        search1.setView(tagValue);
+                        search1.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                tagValue1 = tagValue.getText().toString();
+                                 searchAlbum = searchAlbum.searchOne(albums,tagType1,tagValue1);
+
+                                if(searchAlbum.photoList != null){
+                                    if(searchAlbum.photoList.size() > 0){
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("albums", albums);
+                                        bundle.putSerializable("searchAlbum", searchAlbum);
+                                        Intent intent = new Intent(view.getContext(), SearchResult.class);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+
+                                    }else{
+                                        //search album is size zero alert user
+                                    }
+                                }else{
+                                    //search album is size zero alert user
+                                }
+
+                            }
+                        })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                    return;
+                                    }
+                                })
+                                .show();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                return;
+                            }
+                        })
+                        .show();
+
+            }
+
+
+        });
+
+
+        searchAnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder searchA = new AlertDialog.Builder(SearchOptions.this);
+                searchA.setTitle("Enter Tag Info");
+
+                final EditText tagT1 = new EditText(SearchOptions.this);
+                final EditText tagV1 = new EditText(SearchOptions.this);
+                final EditText tagT2 = new EditText(SearchOptions.this);
+                final EditText tagV2 = new EditText(SearchOptions.this);
+
+                tagT1.setHint("First Tag Type");
+                searchA.setView(tagT1);
+
+                //First
+                searchA.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        tagType1 = tagT1.getText().toString();
+                        AlertDialog.Builder searchA = new AlertDialog.Builder(SearchOptions.this);
+                        searchA.setTitle("Enter Tag Info");
+                        tagV1.setHint("First Tag Value");
+                        searchA.setView(tagV1);
+                        //Second
+                        searchA.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                tagValue1 = tagV1.getText().toString();
+                                AlertDialog.Builder searchA = new AlertDialog.Builder(SearchOptions.this);
+                                searchA.setTitle("Enter Tag Info");
+                                tagT2.setHint("Second Tag Type");
+                                searchA.setView(tagT2);
+                                //Third
+                                searchA.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        tagType2 = tagT2.getText().toString();
+                                        AlertDialog.Builder searchA = new AlertDialog.Builder(SearchOptions.this);
+                                        searchA.setTitle("Enter Tag Info");
+                                        tagV2.setHint("Second Tag Value");
+                                        searchA.setView(tagV2);
+                                        //Fourth
+                                        searchA.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                tagValue2 = tagV2.getText().toString();
+                                                Toast.makeText(SearchOptions.this, tagType1 + tagValue1 + tagType2 + tagValue2, Toast.LENGTH_SHORT).show();
+
+                                                searchAlbum = searchAlbum.searchAnd(albums,tagType1,tagValue1, tagType2, tagValue2);
+
+                                                if(searchAlbum.photoList != null){
+                                                    if(searchAlbum.photoList.size() > 0){
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putSerializable("albums", albums);
+                                                        bundle.putSerializable("searchAlbum", searchAlbum);
+                                                        Intent intent = new Intent(view.getContext(), SearchResult.class);
+                                                        intent.putExtras(bundle);
+                                                        startActivity(intent);
+
+                                                    }else{
+                                                        //search album is size zero alert user
+                                                    }
+                                                }else{
+                                                    //search album is size zero alert user
+                                                }
+                                            }
+                                        })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                                        return;
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                })
+                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                return;
+                                            }
+                                        })
+                                        .show();
+
+
+
+                            }
+                        })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        return;
+                                    }
+                                })
+                                .show();
+                    }
+                })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                return;
+                            }
+                        })
+                        .show();
+            }
+        });
+
+
+
+        searchOr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder searchO = new AlertDialog.Builder(SearchOptions.this);
+                searchO.setTitle("Enter Tag Info");
+
+                final EditText tagT1 = new EditText(SearchOptions.this);
+                final EditText tagV1 = new EditText(SearchOptions.this);
+                final EditText tagT2 = new EditText(SearchOptions.this);
+                final EditText tagV2 = new EditText(SearchOptions.this);
+
+                tagT1.setHint("First Tag Type");
+                searchO.setView(tagT1);
+
+                //First
+                searchO.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        tagType1 = tagT1.getText().toString();
+                        AlertDialog.Builder searchO = new AlertDialog.Builder(SearchOptions.this);
+                        searchO.setTitle("Enter Tag Info");
+                        tagV1.setHint("First Tag Value");
+                        searchO.setView(tagV1);
+                        //Second
+                        searchO.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                tagValue1 = tagV1.getText().toString();
+                                AlertDialog.Builder searchO = new AlertDialog.Builder(SearchOptions.this);
+                                searchO.setTitle("Enter Tag Info");
+                                tagT2.setHint("Second Tag Type");
+                                searchO.setView(tagT2);
+                                //Third
+                                searchO.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    tagType2 = tagT2.getText().toString();
+                                    AlertDialog.Builder searchO = new AlertDialog.Builder(SearchOptions.this);
+                                    searchO.setTitle("Enter Tag Info");
+                                    tagV2.setHint("Second Tag Value");
+                                    searchO.setView(tagV2);
+                                    //Fourth
+                                    searchO.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            tagValue2 = tagV2.getText().toString();
+                                           // Toast.makeText(SearchOptions.this, tagType1 + tagValue1 + tagType2 + tagValue2, Toast.LENGTH_SHORT).show();
+                                            searchAlbum = searchAlbum.searchOr(albums,tagType1,tagValue1, tagType2, tagValue2);
+
+                                            if(searchAlbum.photoList != null){
+                                                if(searchAlbum.photoList.size() > 0){
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putSerializable("albums", albums);
+                                                    bundle.putSerializable("searchAlbum", searchAlbum);
+                                                    Intent intent = new Intent(view.getContext(), SearchResult.class);
+                                                    intent.putExtras(bundle);
+                                                    startActivity(intent);
+
+                                                }else{
+                                                    //search album is size zero alert user
+                                                }
+                                            }else{
+                                                //search album is size zero alert user
+                                            }
+
+                                        }
+                                    })
+                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                                    return;
+                                                }
+                                            })
+                                            .show();
+                                }
+                            })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    return;
+                                }
+                            })
+                                    .show();
+
+
+
+                            }
+                        })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        return;
+                                    }
+                                })
+                                .show();
+                    }
+                })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                return;
+                            }
+                        })
+                        .show();
+            }
+        });
+    }
+}
