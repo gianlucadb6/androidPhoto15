@@ -1,0 +1,117 @@
+    package com.example.photoslucas;
+
+    import android.widget.Toast;
+
+    import java.io.Serializable;
+    import java.util.ArrayList;
+
+    public class Album implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
+        String name;
+        ArrayList<Photo> photoList;
+
+
+        public Album(String name){
+            this.name = name;
+            photoList = new ArrayList<Photo>();
+        }
+
+        public String toString(){
+                return this.name;
+            }
+
+            public Album searchOne(Albums albums,String tagType, String tagValue){
+            boolean contains;
+            String tempType = " ";
+            String tempValue = " ";
+            for(int x = 0; x < albums.albumList.size(); x++){
+                for(int y = 0; y < albums.albumList.get(x).photoList.size() ; y++){
+                    contains = false;
+                    //Toast.makeText(SearchOptions.this, "Here", Toast.LENGTH_LONG).show();
+                    for(int z = 0; z < albums.albumList.get(x).photoList.get(y).tagList.size(); z++){
+                        //  Toast.makeText(SearchOptions.this, "Here", Toast.LENGTH_SHORT).show();
+                        tempType = albums.albumList.get(x).photoList.get(y).tagList.get(z).type;
+                        tempValue = albums.albumList.get(x).photoList.get(y).tagList.get(z).value;
+                        if(tagType.equalsIgnoreCase(tempType) && tagValue.length() <= tempValue.length()){
+                            //Toast.makeText(SearchOptions.this, tempValue, Toast.LENGTH_LONG).show();
+                            if((tempValue.substring(0, (tagValue.length()))).equalsIgnoreCase(tagValue)){
+                                contains = true;
+                            }
+                        }
+                    }
+                    if(contains == true){
+                        this.photoList.add(albums.albumList.get(x).photoList.get(y));
+                    }
+                }
+            }
+            return this;
+        }
+
+        public Album searchOr(Albums albums, String tagType1, String tagValue1, String tagType2, String tagValue2){
+            boolean contains1;
+            boolean contains2;
+            String tempType = " ";
+            String tempValue = " ";
+            for(int x = 0; x < albums.albumList.size(); x++){
+                for(int y = 0; y < albums.albumList.get(x).photoList.size() ; y++){
+                    contains1 = false;
+                    contains2 = false;
+                    for(int z = 0; z < albums.albumList.get(x).photoList.get(y).tagList.size(); z++){
+                        tempType = albums.albumList.get(x).photoList.get(y).tagList.get(z).type;
+                        tempValue = albums.albumList.get(x).photoList.get(y).tagList.get(z).value;
+
+                        if(tagType1.equalsIgnoreCase(tempType) && tagValue1.length() <= tempValue.length()){
+                            if((tempValue.substring(0, (tagValue1.length()))).equalsIgnoreCase(tagValue1)){
+                                contains1 = true;
+                            }
+                        }
+
+                        if(tagType2.equalsIgnoreCase(tempType) && tagValue2.length() <= tempValue.length()){
+                            if((tempValue.substring(0, (tagValue2.length()))).equalsIgnoreCase(tagValue2)){
+                                contains2 = true;
+                            }
+                        }
+                    }
+                    if(contains1 == true || contains2 == true){
+                        this.photoList.add(albums.albumList.get(x).photoList.get(y));
+                    }
+                }
+            }
+            return this;
+        }
+
+        public Album searchAnd(Albums albums, String tagType1, String tagValue1, String tagType2, String tagValue2){
+            boolean contains1;
+            boolean contains2;
+            String tempType = " ";
+            String tempValue = " ";
+            for(int x = 0; x < albums.albumList.size(); x++){
+                for(int y = 0; y < albums.albumList.get(x).photoList.size() ; y++){
+                    contains1 = false;
+                    contains2 = false;
+                    for(int z = 0; z < albums.albumList.get(x).photoList.get(y).tagList.size(); z++){
+                        tempType = albums.albumList.get(x).photoList.get(y).tagList.get(z).type;
+                        tempValue = albums.albumList.get(x).photoList.get(y).tagList.get(z).value;
+
+                        if(tagType1.equalsIgnoreCase(tempType) && tagValue1.length() <= tempValue.length()){
+                            if((tempValue.substring(0, (tagValue1.length()))).equalsIgnoreCase(tagValue1)){
+                                contains1 = true;
+                            }
+                        }
+
+                        if(tagType2.equalsIgnoreCase(tempType) && tagValue2.length() <= tempValue.length()){
+                            if((tempValue.substring(0, (tagValue2.length()))).equalsIgnoreCase(tagValue2)){
+                                contains2 = true;
+                            }
+                        }
+                    }
+                    if(contains1 == true && contains2 == true){
+                        this.photoList.add(albums.albumList.get(x).photoList.get(y));
+                    }
+                }
+            }
+            return this;
+        }
+    }
