@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.photoslucas">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,10 +12,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PhotosLucas">
         <activity
+            android:name=".Slideshow"
+            android:label="@string/title_activity_slideshow"
+            android:theme="@style/Theme.PhotosLucas.NoActionBar"></activity>
+        <activity
+            android:name=".SearchOptions"
+            android:label="@string/title_activity_search_options"
+            android:theme="@style/Theme.PhotosLucas.NoActionBar" />
+        <activity
+            android:name=".Photo_Display"
+            android:label="@string/title_activity_photo__display"
+            android:theme="@style/Theme.PhotosLucas.NoActionBar" />
+        <activity
+            android:name=".Add_album"
+            android:label="@string/title_activity_add_album"
+            android:theme="@style/Theme.PhotosLucas.NoActionBar" />
+        <activity
             android:name=".Edit_display_album"
             android:label="@string/title_activity_edit_display_album"
-            android:theme="@style/Theme.PhotosLucas.NoActionBar"></activity>
-        <activity android:name=".Albums">
+            android:theme="@style/Theme.PhotosLucas.NoActionBar" />
+        <activity
+            android:name=".open_album"
+            android:label="Displayed Album"
+            android:parentActivityName=".AlbumList"
+            android:theme="@style/Theme.PhotosLucas.NoActionBar" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.photoslucas.AlbumList" />
+
+        <activity android:name=".AlbumList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

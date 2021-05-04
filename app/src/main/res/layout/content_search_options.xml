@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:padding="20dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <Button
+            android:id="@+id/search_and"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:backgroundTint="@null"
+            android:layout_marginEnd="15dp"
+            android:background="@color/background"
+            android:onClick="searchAnd"
+            android:text="Two Tags And"
+            android:textColor="@color/foreground"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/search_or"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:backgroundTint="@null"
+            android:background="@color/background"
+            android:onClick="searchOr"
+            android:text="Two Tags Or"
+            android:textColor="@color/foreground"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <Button
+            android:id="@+id/search_one"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:backgroundTint="@null"
+            android:layout_marginEnd="15dp"
+            android:background="@color/background"
+            android:onClick="searchOne"
+            android:text="One Tag"
+            android:textColor="@color/foreground"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/search_options_cancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:backgroundTint="@null"
+            android:background="@color/background"
+            android:onClick="cancel"
+            android:text="Cancel"
+            android:textColor="@color/foreground"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</LinearLayout>

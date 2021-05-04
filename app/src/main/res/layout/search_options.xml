@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".open_album">
+    tools:context=".SearchOptions">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -19,9 +19,6 @@
             app:popupTheme="@style/Theme.PhotosLucas.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_open_album" />
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

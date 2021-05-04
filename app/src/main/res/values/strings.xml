@@ -21,4 +21,16 @@
     <string name="Add">add</string>
     <string name="Remove">remove</string>
     <string name="Display">display</string>
+    <string name="add">Add</string>
+    <string name="title_activity_add_album">Add Album</string>
+    <string name="title_activity_photo__display">Photo</string>
+    <string name="search">search</string>
+    <string name="title_activity_search_options">Search Options</string>
+    <string name="slideshow">slideshow</string>
+    <string name="title_activity_slideshow">Slideshow</string>
+    <string name="Next">Next</string>
+    <string name="Prev">Prev</string>
+    <string name="addTag">Add Tag</string>
+    <string name="remTag">Rem Tag</string>
+    <string name="Move">Move</string>
 </resources>

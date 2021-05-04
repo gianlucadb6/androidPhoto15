@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".open_album">
+    tools:context=".Slideshow">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,8 +20,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_open_album" />
-
+    <include layout="@layout/content_slideshow" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
